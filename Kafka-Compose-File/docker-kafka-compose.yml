@@ -1,24 +1,26 @@
 version: "3.8"
 
 services:
-  kafka-1:
+  kafka-2:
     image: bitnami/kafka:latest
-    container_name: kafka-1
+    container_name: kafka-2
     ports:
-      - "9092:9092"
+      - "9092:9092"  # Kafka external access
     environment:
       - KAFKA_CFG_NODE_ID=1
       - KAFKA_KRAFT_CLUSTER_ID=kBO4mgZ7TLKRpxk-zGJMYA
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9091
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-2:9091
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9090,EXTERNAL://localhost:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-2:9090,EXTERNAL://:${HOSTNAME:-localhost}:9092
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
-      - KAFKA_CFG_EXTERNAL_LISTENER_NAME=EXTERNAL
-
     volumes:
-      - /Users/prashant/Documents/Kafka-volumes/Server-1:/bitnami/kafka
+      - kafka_data:/bitnami/kafka
 
-#docker-compose up -d
+volumes:
+  kafka_data:
+
+#docker-compose -f docker-kafka-compose.yml up -d
+#docker-compose -f docker-kafka-compose.yml --env-file environment.env up -d
