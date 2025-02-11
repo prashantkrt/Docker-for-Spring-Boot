@@ -28,6 +28,8 @@ Second 9092 → Port inside the Kafka container.
 This allows you to connect to Kafka using localhost:9092.  
 
 6. Environment Variables (Kafka Configurations)
+=>Defines configuration settings for Kafka.
+=>These variables control how Kafka works inside the container.
 
  environment:
       - KAFKA_CFG_NODE_ID=1
@@ -35,6 +37,9 @@ This allows you to connect to Kafka using localhost:9092.
 => Kafka works in a cluster (multiple brokers).
 => KAFKA_CFG_NODE_ID=1 assigns ID = 1 to this broker.
 => In multi-broker setups, each broker gets a unique node ID (like 1, 2, 3).    
+=> Kafka works in a cluster (multiple brokers can work together).
+=> Each broker must have a unique ID.
+=> Here, we set the ID of this broker to 1.
 
  environment:
     - KAFKA_KRAFT_CLUSTER_ID=kBO4mgZ7TLKRpxk-zGJMYA
@@ -44,6 +49,7 @@ This allows you to connect to Kafka using localhost:9092.
 => KRaft mode (new, Kafka Raft mode)
 => KAFKA_KRAFT_CLUSTER_ID assigns a unique ID to the Kafka cluster.
 => The value (kBO4mgZ7TLKRpxk-zGJMYA) is a randomly generated UUID for this cluster.
+=> This ID is randomly generated and should be the same for all brokers in the cluster.
 =>  ./bin/kafka-storage random-uuid  gives kBO4mgZ7TLKRpxk-zGJMYA
 
  environment:
@@ -53,10 +59,14 @@ This allows you to connect to Kafka using localhost:9092.
 => controller → Manages the cluster (metadata, leader elections).
 => broker → Stores and serves messages.
 => In KRaft mode, one or more brokers act as controllers.
+=> In KRaft mode, Kafka does not use Zookeeper.
+=> This broker acts as both a Controller and a Broker.
+
 
  environment:
     - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS_LIST=1@kafka-1:9092
 
+=> Controller quorum voters = The brokers that can vote in leader elections.
 => This sets the controller quorum (list of controllers).
 => The format is: node_id@host:port
 => 1@kafka-1:9092 means:
@@ -67,7 +77,9 @@ This allows you to connect to Kafka using localhost:9092.
  environment:
     - KAFAK_CFG_LISTNERS=PLAINTEXT://:9090, CONTROLLER://:9091 ,EXTERNAL://:9092
   This defines how Kafka accepts connections.
+  Listeners (How Kafka Accepts Connections)
 
+=> Kafka can listen on multiple ports for different types of connections.
 => Kafka uses different listeners for different types of communication:
 Listener Type	    Purpose
 PLAINTEXT://:9090	Internal broker communication ,  Inter broker communication
@@ -75,29 +87,85 @@ CONTROLLER://:9091	Used for controller operations
 EXTERNAL://:9092	Used for external clients (e.g., your apps)  
 
  environment:
-   - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9090,CONTROLLER://kafka-1:9091,EXTERNAL://kafka-1:9092
+   - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9090,EXTERNAL://localhost:9092
 
 => This tells Kafka how to advertise itself to clients.
-
+=> Tells clients how to connect to Kafka.
+=> Format: LISTENER_TYPE://host:port
 Clients need to know where Kafka is running so they can connect!
 Breaking It Down
-Listener Type	Host & Port	     Purpose
+Listener Type	Host & Port	      Purpose
 PLAINTEXT	    kafka-1:9090	 Used for internal broker communication
 CONTROLLER	    kafka-1:9091	 Used for KRaft controller operations
 EXTERNAL	    kafka-1:9092	 Used for external clients (e.g., apps, producers, consumers)
 
+Security and Listener Mapping
+  environment:
+   - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+=> Defines security protocols for each listener.
+=> Here, all connections use PLAINTEXT (no encryption or authentication).
+=> In production, you might use SSL or SASL for security.
 
-Summary : 
---------->   
-version: "3.8" → Defines Docker Compose version.
-services: → Defines Kafka service.
-image: bitnami/kafka:latest → Pulls Kafka’s latest image.
-container_name: kafka-1 → Names the Kafka container.
-ports: 9092:9092 → Exposes Kafka externally.
-KAFKA_CFG_NODE_ID=1 → Sets broker ID to 1.
-KAFKA_KRAFT_CLUSTER_ID=... → Assigns a unique cluster ID.
-KAFKA_CFG_PROCESS_ROLES=controller,broker → Defines this node as both a controller and broker.
-KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9092 → Defines controller nodes.
-KAFKA_CFG_LISTENERS=... → Configures different listeners.
-  
-   
+
+Special Kafka Settings
+  environment:
+    - KAFKA_CFG_CONTROLLER_LISTENER_NAME=CONTROLLER
+    - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    - KAFKA_CFG_EXTERNAL_LISTENER_NAME=EXTERNAL
+
+Defines which listener the Controller should use.
+Here, the CONTROLLER listener (running on port 9091) will handle controller tasks.
+
+Defines how brokers communicate with each other in a cluster.
+This broker will use the PLAINTEXT listener (port 9090) to talk to other brokers.
+
+Defines which listener external clients (apps) should use.
+Here, clients (like producers/consumers) will use the EXTERNAL listener on port 9092.
+
+7. Persistent Storage (Kafka Data)
+volumes:
+      - /Users/prashant/Documents/Kafka-volumes/Server-1:/bitnami/kafka
+
+=> Volumes store Kafka data permanently (even if the container stops).
+=> Format: host_path:container_path
+=> Left side (/Users/prashant/Documents/Kafka-volumes/Server-1) → Folder on your Mac.
+=> Right side (/bitnami/kafka) → Folder inside the Kafka container.
+=> This ensures Kafka logs, topics, and messages are not lost when the container restarts.
+      
+
+
+    ***Line-by-Line Summary*** 
+    Docker Compose & Service Definition :=>
+    version: "3.8" → Defines Docker Compose version.
+    services: → Defines Kafka service.
+    kafka-1: → Creates a Kafka service named kafka-1.
+    image: bitnami/kafka:latest → Pulls Kafka’s latest image.
+    container_name: kafka-1 → Names the Kafka container.
+    ports: 9092:9092 → Exposes Kafka externally on port 9092.
+
+    Kafka Configuration (Environment Variables):=>
+    KAFKA_CFG_NODE_ID=1 → Sets broker ID to 1.
+    KAFKA_KRAFT_CLUSTER_ID=... → Assigns a unique cluster ID for KRaft mode (no Zookeeper).
+    KAFKA_CFG_PROCESS_ROLES=controller,broker → Defines this node as both a Controller and Broker.
+    KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9092 → Defines controller nodes (who can vote in leader elections).
+
+    Listener Configuration (How Kafka Accepts Connections):=>
+    KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9092 → Configures different listeners:
+    PLAINTEXT://:9090 → Internal broker communication.
+    CONTROLLER://:9091 → Handles controller tasks.
+    EXTERNAL://:9092 → Used for external clients (apps, producers, consumers).
+
+    KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9090,EXTERNAL://localhost:9092 → Tells clients how to connect:
+    PLAINTEXT://kafka-1:9090 → Used inside Docker network.
+    EXTERNAL://localhost:9092 → Used by apps outside Docker (on your Mac).
+
+    KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT → Defines security settings (all listeners use PLAINTEXT, meaning no encryption).
+    KAFKA_CFG_CONTROLLER_LISTENER_NAME=CONTROLLER → Sets CONTROLLER listener for handling cluster management.
+    KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT → Defines how brokers communicate with each other (PLAINTEXT on port 9090).
+    KAFKA_CFG_EXTERNAL_LISTENER_NAME=EXTERNAL → Specifies that external clients should use the EXTERNAL://:9092 listener.
+
+    Persistent Storage (Kafka Data):=>
+    volumes: → Defines persistent storage for Kafka data.
+    /Users/prashant/Documents/Kafka-volumes/Server-1:/bitnami/kafka → Maps Kafka’s internal data directory to a folder on your Mac, ensuring messages and logs are not lost after restarting the container.
+    
+    
