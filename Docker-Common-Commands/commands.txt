@@ -1,0 +1,111 @@
+# Docker Commands
+
+
+-d (Detach Mode)
+-t (Typically paired with -i (-it mode) for interactive shells.)
+
+-dlt
+-d: Runs in the background.
+
+-i: Keeps STDIN open.
+
+-t: Allocates a terminal.
+
+
+## Containers ##
+
+# List running containers
+docker ps
+
+# List all containers (including stopped ones)
+docker ps -a
+
+# Create container
+docker create --name <container_name> <image_name>
+docker create --name my_mysql -e MYSQL_ROOT_PASSWORD=admin@123 mysql
+docker create --name my_mysql -e MYSQL_ROOT_PASSWORD=admin@123 -e MYSQL_DATABASE=myDB  mysql
+
+Note: docker start and docker stop only start and stop an existing container—they do not create a new one.
+# Start a container
+docker start <container_id>
+docker start <container_name>
+
+# Stop a container
+docker stop <container_id>
+docker stop <container_name>
+
+# Remove a container
+docker rm <container_id>
+docker rm -f <container_id>      # Force remove a running container  
+
+# Run a container from an image (creates and starts the MySQL container)
+# pulls the image (if not available locally) and creates a container from it.
+docker run -d --name <container_name> <image_name>  # Run a container in the background  
+docker run -d --name my_mysql -e MYSQL_ROOT_PASSWORD=admin@123 -e MYSQL_USER=root -e MYSQL_PASSWORD=admin@123 mysql
+
+# Show logs of a running container
+docker logs <container_id>
+
+## Images ##
+
+# List all images
+docker images
+
+# Pull an image from Docker Hub
+docker pull <image_name>
+
+# Remove an image
+docker rmi <image_id>
+docker rmi <image_name>
+
+## Networks ##
+
+# List networks
+docker network ls
+
+# Create a network
+docker network create <network_name>
+
+## Volumes ##
+
+# List volumes
+docker volume ls
+
+# Create a volume
+docker volume create <volume_name>
+
+# Remove a volume
+docker volume rm <volume_name>
+
+## Docker Compose
+
+# Start services defined in docker-compose.yml
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+## Miscellaneous ##
+
+# Show the last created container  
+docker ps -l    
+
+ # Get detailed info about a container  
+docker inspect <container_id>  
+
+# Access a running container's shell  
+docker exec -it <container_id> bash  
+
+ # Show resource usage of running containers  
+docker stats                     
+
+# Show Docker system info
+docker info
+
+# Show disk usage
+docker system df
+
+# Clean up unused containers, networks, images, and caches
+docker system prune -a
+
+
