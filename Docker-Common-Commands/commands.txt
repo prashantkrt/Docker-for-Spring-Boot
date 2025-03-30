@@ -23,7 +23,7 @@ docker ps -a
 # Create container
 docker create --name <container_name> <image_name>
 docker create --name my_mysql -e MYSQL_ROOT_PASSWORD=admin@123 mysql
-docker create --name my_mysql -e MYSQL_ROOT_PASSWORD=admin@123 -e MYSQL_DATABASE=myDB  mysql
+docker create --name my_mysql -e MYSQL_ROOT_PASSWORD=admin@123 -e MYSQL_DATABASE=myDB mysql
 
 Note: docker start and docker stop only start and stop an existing container—they do not create a new one.
 # Start a container
