@@ -50,4 +50,8 @@ CMD ["--server.port=8085"]
 
 # To build the image: 
 # Spring-Boot-DockerApp % docker build -t my-image:demo-3 .
+
+# To run the container:
+# docker run -p 8085:8080 my-image:demo-3
+# http://localhost:8085/hello
     
