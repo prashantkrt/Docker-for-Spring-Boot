@@ -107,5 +107,3 @@ docker system df
 
 # Clean up unused containers, networks, images, and caches
 docker system prune -a
-
-
