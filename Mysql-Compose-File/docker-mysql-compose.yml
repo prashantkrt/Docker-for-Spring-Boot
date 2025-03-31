@@ -15,6 +15,6 @@ services:
       - /Users/prashant/Documents/MySQL Volumes/vol1:/var/lib/mysql # will be managed my me locally
 
 volumes:
-  mysql_data:
+  mysql_data: #Since you're managing the storage yourself, you don’t need Docker to create a named volume.
 
   #  docker logs mysql_container

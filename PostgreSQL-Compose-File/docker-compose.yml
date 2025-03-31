@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my-postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: prashant
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: mydatabase
+    volumes:
+      # Internal Named Volume (Managed by Docker)
+      - postgres_data:/var/lib/postgresql/data    # Using a Docker-managed named volume
+
+volumes:
+  postgres_data: # This defines the named volume

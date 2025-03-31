@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+    backend-service:
+        build: .
+        ports:
+            - "8082:8081"
+
+    db-service:
+        image: postgres:latest
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_USER: prashant
+            POSTGRES_PASSWORD: 1234
+            POSTGRES_DB: postgresDB
+
+
+
+# note : spring.datasource.url=jdbc:postgresql://db-service:5432/postgresDB
+          
+#docker-compose up --build    
+
+#docker ps 
+#You will see backend-service and db-service instead of app and postgres.
