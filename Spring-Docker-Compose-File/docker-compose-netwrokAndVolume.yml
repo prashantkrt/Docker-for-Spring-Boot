@@ -1,0 +1,31 @@
+version: "3.8"
+
+networks:
+  my_network:  # Custom network
+    driver: bridge  # default driver ,When you want containers to communicate with each other on the same host but not with external networks directly.
+
+services:
+  app:
+    build: .
+    ports:
+      - "8082:8081"
+    networks:
+      - my_network
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: prashant
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: postgresDB
+    networks:
+      - my_network
+    volumes:     
+      - postgres_data:/var/lib/postgresql/data   # internal to the container
+
+volumes:
+  postgres_data:
+     
+        
