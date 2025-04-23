@@ -1,0 +1,37 @@
+## docker system prune: ## To Clean Up activity within docker
+
+This command removes unused data, including:
+- stopped containers
+- unused networks
+- dangling images (images not associated with any container)
+- build cache
+
+-a / --all:
+This tells Docker to also remove unused images, not just dangling ones. So it deletes:
+any image not currently used by a running or stopped container
+
+-f / --force:
+This skips the confirmation prompt and runs the prune immediately.
+
+1. docker system prune  :=> removes unused data including stopped containers , unused networks , images not associated with any container and also build cache.
+2. docker system prune -a or -all  :=>  Removes all unused images , An "unused image" means any image not currently used by at least one container (running or stopped).
+3. Docker system prune -f  :=> This skips the confirmation prompt and runs the prune immediately.
+4. Docker system prune -af :=> clean up Docker resources aggressively (-a + -f)
+ 
+
+# docker images ## list the images
+
+5. docker images 
+
+# docker run <image-name> ## pulls , create container and run it
+
+6. docker run hello-world
+
+# docker pull <image-name> ## pulls the image 
+
+7. docker pull nginx
+
+## docker create <image-name> ## pulls and create the container
+
+8. docker create nginx
+
