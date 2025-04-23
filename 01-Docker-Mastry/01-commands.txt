@@ -17,21 +17,3 @@ This skips the confirmation prompt and runs the prune immediately.
 2. docker system prune -a or -all  :=>  Removes all unused images , An "unused image" means any image not currently used by at least one container (running or stopped).
 3. Docker system prune -f  :=> This skips the confirmation prompt and runs the prune immediately.
 4. Docker system prune -af :=> clean up Docker resources aggressively (-a + -f)
- 
-
-# docker images ## list the images
-
-5. docker images 
-
-# docker run <image-name> ## pulls , create container and run it
-
-6. docker run hello-world
-
-# docker pull <image-name> ## pulls the image 
-
-7. docker pull nginx
-
-## docker create <image-name> ## pulls and create the container
-
-8. docker create nginx
-

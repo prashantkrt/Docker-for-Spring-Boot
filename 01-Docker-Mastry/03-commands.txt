@@ -1,0 +1,18 @@
+Run a new container using the ubuntu image.
+Execute the date command inside that container.
+Print the result (current date and time based on the container's clock).
+Exit immediately after the command finishes.
+
+1. docker run ubuntu date :=> This is the Linux command passed as an argument to the container. It shows the current system date and time.
+2. docker run ubuntu ls 
+
+-i = Interactive
+-t = terminal-like interface inside the container.
+
+Starts a container from the Ubuntu image
+Opens an interactive shell (bash) inside it
+Lets you type commands and interact as if you're inside a normal Linux machine
+By default, the ubuntu image uses /bin/bash as its CMD, so it usually drops you into a shell.
+
+3. docker run -it ubuntu :=> Allocate a terminal (-t) and keep STDIN open (-i) so you can interact with it.
+

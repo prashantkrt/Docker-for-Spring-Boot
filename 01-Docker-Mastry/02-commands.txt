@@ -1,0 +1,43 @@
+## docker images ## list the images
+
+1. docker images 
+
+## docker run <image-name> ## pulls , create container and run it
+
+2. docker run hello-world
+3. docker run --name=myubuntu ubuntu :=> with custom name
+
+## docker pull <image-name> ## pulls the image 
+
+4. docker pull nginx
+
+## docker create <image-name> ## pulls and create the container
+
+5. docker create nginx
+
+## docker ps The docker ps command is used to list running containers in Docker
+
+6. docker ps 
+7. docker ps -a :=> -a or --all Shows all containers (not just running ones, also stopped, exited, etc.)
+8. docker ps -q :=> Shows only container IDs (quiet mode)
+9. docker ps -aq
+10. docker ps -f status=exited :=> --filter or -f Filters output based on conditions like status, name, etc.
+
+## docker start  ## start an existing (stopped) container.
+docker start <container_name_or_id> 
+
+11. docker start zen_villani
+
+-a = --attach
+Attach the container's standard output and error to your terminal.
+-i = --interactive
+Keep standard input open, so you can type into the container.
+
+docker run -it --name=myubuntu ubuntu then start it with -ai
+12  docker start -ai myubuntu :=> Start the container and attach to it like an interactive terminal, like we do for run with -it
+
+## docker stop ## stop an existing (stopped) container. Note that docker stop = Graceful but docker kill = Brutal
+docker stop <container_name_or_id>
+
+12. docker stop zen_villani
+13. docker stop -t 5 myubuntu :=> customize the timeout (default is 10 seconds):
