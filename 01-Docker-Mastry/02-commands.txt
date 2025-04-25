@@ -41,3 +41,8 @@ docker stop <container_name_or_id>
 
 12. docker stop zen_villani
 13. docker stop -t 5 myubuntu :=> customize the timeout (default is 10 seconds):
+
+## docker kill ## Immediately terminates a running container by sending a SIGKILL signal to its main process.
+docker kill <container_name_or_id> ## Unlike docker stop, it does NOT wait for the process to shut down gracefully.
+
+14. docker kill myubuntu

@@ -1,0 +1,18 @@
+## docker exec lets you run a command inside a running container
+
+1. docker exec -it myubuntu bash
+2. docker exec myubuntu ls /
+3. docker exec -it myubuntu sh         # If bash isn’t available
+4. docker exec -it myubuntu apt update
+
+-i  Keep STDIN open (for interactive input)
+-t	Allocate a pseudo-TTY (terminal)
+-d	Run command in the background (detached)
+--user	Run as a specific user inside the container
+--env	Set environment variables
+
+## docker run -it --name myubuntu ubuntu
+
+5. docker exec -i myubuntu cat > /tmp/test.txt :=> Run cat inside the myubuntu container, let me type some text, and save that text to /tmp/test.txt. Type: Hello from Prashant and Then press: Ctrl + D
+6. docker exec --user nobody myubuntu whoami :=>  Runs the command as a different user (e.g., nobody) instead of root.
+7. docker exec --env NAME=Prashant myubuntu printenv NAME :=> printenv NAME: This command prints the value of the NAME environment variable.
