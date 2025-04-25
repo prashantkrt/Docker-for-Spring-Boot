@@ -1,0 +1,30 @@
+## Docker Image Name format 
+[registry-host:port]/[username]/image-name[:tag] :=> Docker.io/library/hello-world:latest
+ubuntu:latest     # Equivalent to docker.io/library/ubuntu:latest
+
+docker pull ubuntu
+docker.io/library/ubuntu:latest
+
+Custom Image on Docker Hub:
+myuser/myapp:v1  :=> docker.io/myuser/myapp:v1
+
+Private Registry:
+myregistry.com:5000/myapp:v1
+
+myregistry.com:5000/myuser/myapp:v1
+
+- If no registry is specified → defaults to docker.io
+- If no tag is given → defaults to :latest
+- Official images are under the library namespace
+
+- image-name (mandatory)
+- tag (optional, but important):
+- registry-host:port (optional)
+- username (optional for official images, mandatory for custom images)
+
+
+
+tag: 	Optional -> Defaults to latest if not specified.
+registry-host: 	Optional ->	Defaults to Docker Hub (docker.io) if omitted.
+username: 	Optional ->	Not needed for official images (library/ used).
+port: 	Optional ->	Needed if your registry is on a custom port.
