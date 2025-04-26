@@ -1,5 +1,5 @@
 ## port Mapping 
-# we have to sue run for using the port mapping in docker
+# we have to use run command for using the port mapping in docker
 # port mapping is typically done when running a container using the docker run command
 
 ## docker run -p <host_port>:<container_port> <image_name>
