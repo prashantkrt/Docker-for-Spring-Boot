@@ -1,0 +1,19 @@
+# => watch -n 2 'echo "--- CONTAINERS ---"; docker ps -a; echo "--- IMAGES ---"; docker images; echo "--- VOLUMES ---"; docker volume ls; echo "--- NETWORKS ---"; docker network ls'
+
+# => watch -t -n 2 'echo "--- CONTAINERS ---"; docker ps -a; echo "--- IMAGES ---"; docker images; echo "--- VOLUMES ---"; docker volume ls; echo "--- NETWORKS ---"; docker network ls'
+
+- watch -n 2: Runs the command every 2 seconds (you can adjust the interval).
+
+- docker ps -a: Lists all containers.
+
+- docker images: Lists all images.
+
+- docker volume ls: Lists all volumes.
+
+- docker network ls: Lists all networks.
+
+- The -t flag in the watch command disables the header (title bar) that watch normally displays at the
+
+
+# => watch -t -n 2 'echo "--- CONTAINERS ---"; docker ps -a; echo ""; echo "--- IMAGES ---"; docker images; echo ""; echo "--- VOLUMES ---"; docker volume ls; echo ""; echo "--- NETWORKS ---"; docker network ls'
+# => watch -t -n 2 'echo "--- CONTAINERS ---" && docker ps -a && echo && echo "--- IMAGES ---" && docker images && echo && echo "--- VOLUMES ---" && docker volume ls && echo && echo "--- NETWORKS ---" && docker network ls'

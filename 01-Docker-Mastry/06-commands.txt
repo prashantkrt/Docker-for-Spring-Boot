@@ -1,0 +1,11 @@
+## port Mapping 
+# we have to sue run for using the port mapping in docker
+# port mapping is typically done when running a container using the docker run command
+
+## docker run -p <host_port>:<container_port> <image_name>
+- container_port: The port the app listens to inside the container.
+- host_port: The port you use to access it from outside.
+
+1. docker run -p 8080:80 nginx :=> http:localhost:8080
+2. docker run -d -p 8080:80 -p 8443:443 nginx
+3. docker run -p 8080:80 -p 8081:8081 my-nginx
