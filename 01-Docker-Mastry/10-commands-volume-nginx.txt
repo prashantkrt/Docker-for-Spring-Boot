@@ -1,0 +1,26 @@
+## Nginx Volume
+
+=> docker run -d -p 8080:80 --name c1 -v /Users/prashant/Desktop/doc-volume-demo:/usr/share/nginx/html nginx
+- http://localhost:8080
+
+
+#  Scenario : Nginx volume example
+=> docker run -d --name=c2 nginx
+-  docker exec -it d0a9 bash
+-  cd /usr/share/nginx/html
+-  ls
+-  cat index.html ## we will see the default page
+-  exit
+- docker kill c2
+- docker system prune -af
+
+- creating the index.html in same directory
+- code index.html 
+
+- or in same directory
+- echo "<h1>Welcome to Nginx</h1>" > index.html
+
+- creating the brand new container
+=> docker run -d -p 8080:80 --name c1 -v $PWD:/usr/share/nginx/html nginx
+- http://localhost:8080 
+

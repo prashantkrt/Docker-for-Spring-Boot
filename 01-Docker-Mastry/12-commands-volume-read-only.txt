@@ -1,0 +1,16 @@
+# docker volume read only mode
+=> docker run -it -v $PWD:/a/b ubuntu
+- cd /a/b
+- ls
+- rm index.html # anyone can delete files in /a/b
+- touch index.html # anyone can create new files in /a/b
+- mkdir index.html # anyone can create new directories in /a/b
+- echo "hello world" > index.html # anyone can write to the files in /a/b
+
+# docker volume read only mode
+=> docker run -it -v $PWD:/a/b:ro ubuntu
+- now you can only read the files in /a/b
+- you can not write to the files in /a/b
+- you can not create new files in /a/b
+- you can not delete files in /a/b
+- you can not create new directories in /a/b

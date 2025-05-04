@@ -1,0 +1,9 @@
+# docker voulme single file
+# index.html, hi.txt, hello.txt
+
+=> docker run -d -p 8080:80 --name c1 -v $PWD/index2.html:/usr/share/nginx/html/index.html nginx
+- http://localhost:8080
+
+## Note in case of single file mapping
+- if we create a new file in the current directory, it will not be reflected in the container
+- if we create a new file in the container, it will not be reflected in the current directory
