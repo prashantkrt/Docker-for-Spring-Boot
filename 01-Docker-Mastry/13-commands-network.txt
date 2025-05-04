@@ -1,0 +1,47 @@
+# Docker Networks
+
+- A Docker network is a way to let containers talk to each other, or to the outside world (like your host or internet), in an organized and secure way.
+
+## Bridge
+- bridge =>	Default for standalone containers.
+- Most commonly used
+- Each container gets its own private IP, and containers on the same bridge can talk to each other using that IP or container name.
+- We can run two containers: nginx1 and nginx2
+- Both are on the bridge network
+- nginx1 can access nginx2 using its name or IP
+
+## Host ( only on Linux )
+- host => Container shares host's network namespace
+- Container uses the host’s network stack directly.
+- No network isolation — great for performance, but less secure.
+- No separate container IP
+- Container listens on your host’s port directly (e.g., port 80)
+
+- Your computer (host) has an address: let's say 192.168.1.100
+- Normally, Docker containers get their own "mini house" (own IP) via the bridge network
+- But with host network, the container says:
+“I don't want my own house. I’ll live in your house, use your address, and use your door (port) too!”
+
+## None
+- none => No network at all, Container has no network connectivity
+- Disables all networking.
+- Use when the container doesn’t need any network access.
+- The container is cut off from all networking — no internet, no other containers, nothing.
+
+# Bridge(Default)
+=>  docker run --name=c1 nginx 
+- docker inspect c1
+- We can see the IP address of the container under network -> bridge -> IP address which is  "IPAddress": "172.17.0.2",
+
+=>  docker run -it --name=c2 ubuntu bash
+- apt update
+- apt install iputils-ping -y 
+- ping 172.17.0.2 # we will be able to ping the container c1
+- apt install -y curl
+- curl 172.17.0.2
+
+- DNS Server IP
+- cat etc/resolv.conf
+- we can see the DNS server is in my case nameserver 192.168.65.7
+
+
