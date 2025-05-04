@@ -1,0 +1,32 @@
+## Docker Volume 
+#  -v or --volume option in docker run
+#  docker run -v <source or host-path>:<target or container-path> <image>
+
+=> docker volume create myvolume
+=> docker run -v /Users/prashant/Desktop/doc-volume-demo:/app/data [image-Name]
+
+=> docker run -v /Users/prashant/Desktop/doc-volume-demo:/app/data -it ubuntu bash
+
+:- Note:  The official ubuntu Docker image has a default CMD in its Dockerfile: CMD ["bash"]
+:- If you don't provide any command, Docker runs bash by default.
+
+=> docker run -it -v $PWD:/a/b/c ubuntu, (cd /a/b/c we will see the files in the current directory)
+
+
+- cd a/b/c
+- ls
+- echo "This is a DB" > db.txt
+- ls   # we will seeing the db.txt file in the current directory
+- cat db.txt
+- exit
+
+- now do docker prune 
+- docker system prune -af
+- docker ps / docker ps -a
+
+- now run the fresh container
+=> docker run -it -v $PWD:/a/b/c ubuntu bash
+- cd a/b/c
+- ls
+- cat db.txt # still we can see the db.txt file
+- exit
