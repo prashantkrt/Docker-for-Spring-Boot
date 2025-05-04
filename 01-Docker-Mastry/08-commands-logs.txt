@@ -1,0 +1,6 @@
+## logs 
+
+# docker logs <container_id or container_name>
+
+=> docker run -d --name my-nginx nginx
+=> docker logs my-nginx
