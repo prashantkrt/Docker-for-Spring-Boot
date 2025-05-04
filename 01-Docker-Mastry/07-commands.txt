@@ -1,0 +1,13 @@
+## Detatched Mode
+# In docker detached mode allows you to run a container in the background, rather than keeping it attached to your terminal session.
+
+=>  -d or --detach flag with docker run
+
+# docker run -d --name my-nginx -p 8085:80 nginx, use http://localhost:8085
+# docker run -d -p 8080:80 nginx, use http://localhost:8080
+- The container starts in the background.
+- Docker returns the container ID immediately.
+- Your terminal is freed up for other commands.
+
+- The container keeps running until it is stopped manually so to run in the background and freed up the terminal we have to user -d or -detach
+  else the container will keep running until you stop it manually.
