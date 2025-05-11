@@ -1,4 +1,4 @@
-# docker voulme single file
+# docker volume single file
 # index.html, hi.txt, hello.txt
 
 => docker run -d -p 8080:80 --name c1 -v $PWD/index2.html:/usr/share/nginx/html/index.html nginx

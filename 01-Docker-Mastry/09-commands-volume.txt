@@ -30,3 +30,13 @@
 - ls
 - cat db.txt # still we can see the db.txt file
 - exit
+
+
+# docker volumes basics
+=> docker volume ls , To list all Docker volumes
+=> docker volume inspect my_volume_1 , Inspect a specific volume
+=> docker volume ls -q , List volume names only
+=> docker volume prune , Remove all unused volumes
+=> docker volume rm my_volume_1 , Remove a specific volume
+=> docker volume rm $(docker volume ls -q) , Remove all volumes
+=> docker volume create my_volume_1 , Create a new volume

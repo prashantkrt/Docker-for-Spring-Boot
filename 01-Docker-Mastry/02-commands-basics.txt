@@ -19,7 +19,7 @@
 
 6. docker ps 
 7. docker ps -a :=> -a or --all Shows all containers (not just running ones, also stopped, exited, etc.)
-8. docker ps -q :=> Shows only container IDs (quiet mode)
+8. docker ps -q :=> Shows only container IDs (quiet mode) or => docker images -q, Outputs only image IDs
 9. docker ps -aq
 10. docker ps -f status=exited :=> --filter or -f Filters output based on conditions like status, name, etc.
 
