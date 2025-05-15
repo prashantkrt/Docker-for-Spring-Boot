@@ -1,0 +1,35 @@
+## Docker custom Bridge Network
+
+=> docker network create my-bridge-network
+=> docker network inspect <network-name> \
+=> docker network ls
+
+- first create the network 
+=> docker network create my-bridge-network
+
+- create the first container 
+=> docker run -d --name my-nginx --network my-bridge-network nginx
+
+- create the second container over the same network
+=> docker run -it --name=c1 --network=my-bridge-network ubuntu bash
+
+=> apt update 
+=> apt install -y curl 
+=> curl http://my-nginx or curl my-nginx , both will work
+
+## connect any container to multiple Docker networks using docker network connect, and similarly disconnect them later using docker network disconnect
+=> docker network create net-one
+=> docker network create net-two
+
+=> docker run -d --name my-nginx --network net-one nginx
+
+- Now my-nginx is part of both net-one and net-two using below
+=> docker network connect net-two my-nginx 
+
+=> docker network connect my-bridge-network my-nginx
+=> docker network connect my-bridge-network c1
+=> docker network disconnect my-bridge-network my-nginx
+=> docker network disconnet my-bridge-network c1
+
+## remove / delete 
+=> docker network rm my-bridge-network
