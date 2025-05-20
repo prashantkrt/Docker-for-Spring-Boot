@@ -28,7 +28,7 @@ docker exec 19de ls
 docker exec 19de ls -a will list all the folder 
 docker exec 19de ls /tmp or docker exec 19de ls /usr    as per your requirement we can use any
 
-docker cp target/my-app.jar exciting_volhard:/tmp  go the file location of the spring app
+docker cp target/my-app.jar exciting_volhard(name/Id of the conatiner):/tmp  go the file location of the spring app
 
 #check and confirm 
 docker exec 19de ls /tmp
@@ -43,7 +43,7 @@ use this and apply --change CMD with array values
 docker commit --change='CMD ["java","-jar","/tmp/my-app.jar"]' 19de my-image:demo-2
 docker run my-image:demo-2
 
-# my app is running inside the docker and it is not accessed outside since its runnign in docker network
+# my app is running inside the docker and it is not accessed outside since its running in docker network
 docker run -p <expose-port>:<container-port> my-image:demo-2
 docker run  -p 8085:8080 my-image:demo-2 
 
